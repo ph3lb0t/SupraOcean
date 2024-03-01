@@ -4,10 +4,9 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - PJ
   - Trap
-  - Bombita
   - Enemy
+  - Bomb
   layers:
   - Default
   - TransparentFX

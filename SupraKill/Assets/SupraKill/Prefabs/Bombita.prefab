@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3304745379859883074}
   m_Layer: 0
   m_Name: Bombita
-  m_TagString: Bombita
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -6,16 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/SupraKill/Scenes/Portada.unity
-    guid: 35d5043f42b3940ccb60c9c7697a4a7e
+    path: Assets/SupraKill/Scenes/PierreScene.unity
+    guid: e198bf9f4af999a489b4e4716d50f1c4
   - enabled: 1
     path: Assets/SupraKill/Scenes/NVL2.unity
     guid: 9c1daea8a7763e248aee35709e9a133c
-  - enabled: 1
-    path: Assets/SupraKill/Scenes/ZuheScene.unity
-    guid: 9e1ad5bac6074184c94d247eacc83d10
-  - enabled: 1
-    path: Assets/SupraKill/Scenes/EndPanel.unity
-    guid: 7167d6c971c8a41eeb133aae36c0cfd8
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: fe101e75a7356d84d833e4cbea938f82, type: 2}
