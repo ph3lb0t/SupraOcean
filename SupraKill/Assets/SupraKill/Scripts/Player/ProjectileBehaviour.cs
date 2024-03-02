@@ -27,14 +27,4 @@ public class ProjectileBehaviour : MonoBehaviour
             transform.position += -transform.right * Speed * Time.deltaTime;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        var enemy = collision.collider.GetComponent<Health>();
-        if (enemy)
-        {
-            enemy.TakeDamage(1);
-        }
-        Destroy(gameObject);
-    }
 }

@@ -16,6 +16,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource jumpSoundEffect;
     [SerializeField] private AudioSource deathSoundEffect;
 
+    //BOMBA
+
+    public ProjectileBehaviour ProjectilePrefab;
+    public ProjectileBehaviour LaunchableProjectilePrefab;
+    public Transform LaunchOffset;
+
     [Header("Player Attributes")]
     [SerializeField] float velocityY;
     [SerializeField] float velocityX;
@@ -119,6 +125,11 @@ public class PlayerController : MonoBehaviour
 
         ConstantSaiAnim();
         TriggerAnimations();
+
+        if (Input.GetButtonDown("Fire2"))
+        {
+            Instantiate(LaunchableProjectilePrefab, LaunchOffset.position, transform.rotation);
+        }
 
 
 
