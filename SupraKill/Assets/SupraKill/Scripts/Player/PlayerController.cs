@@ -275,6 +275,7 @@ private void OnDrawGizmos()
     {
         Debug.Log("player hit");
 
+        anim.SetTrigger("hurt");
         currentHealth -= amount;
 
         if (currentHealth <= 0) 

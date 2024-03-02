@@ -15,12 +15,13 @@ GameObject:
   - component: {fileID: 2575411458032888966}
   - component: {fileID: 5586968186002101495}
   - component: {fileID: 4325270017712162663}
+  - component: {fileID: 6231021952990524}
   - component: {fileID: 8372583615944034468}
   - component: {fileID: 280102559398006267}
   - component: {fileID: 5134072676855243780}
   m_Layer: 6
   m_Name: Sai
-  m_TagString: PJ
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,7 +35,7 @@ Transform:
   m_GameObject: {fileID: 2263697626143440069}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.28, y: -1.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -201,7 +202,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizontalInput: 0
   jumpSoundEffect: {fileID: 8372583615944034468}
-  deathSoundEffect: {fileID: 280102559398006267}
+  deathSoundEffect: {fileID: 0}
   velocityY: 0
   velocityX: 0
   playerBaseSpeed: 1.21
@@ -325,6 +326,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6231021952990524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2263697626143440069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36b1871b1107e264caf1c3197621e0dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombitaText: {fileID: 0}
 --- !u!82 &8372583615944034468
 AudioSource:
   m_ObjectHideFlags: 0
@@ -669,7 +683,7 @@ Transform:
   m_GameObject: {fileID: 3721874656567856168}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.86, y: 0.73, z: 0}
+  m_LocalPosition: {x: 0.66, y: 0.684, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
