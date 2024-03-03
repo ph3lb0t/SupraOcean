@@ -4,46 +4,61 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    [SerializeField] private float radio;
+    [SerializeField] private float explosionRadius;
+    [SerializeField] private float explosionForce;
 
-    [SerializeField] private float fuerzaExplosion;
+    public float Speed = 4;
+    public Vector3 LaunchOffset;
+    public bool Thrown;
 
-    [SerializeField] private GameObject efectoExplosion;
+    Rigidbody2D rb;
+    CircleCollider2D col;
 
-    private void Update()
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            Explosion();
-        }
+        Destroy(gameObject, 5); // Destroy automatically after 5 seconds
+    }
+
+    private void Awake()
+    {
+        col = GetComponent<CircleCollider2D>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public void Explosion()
     {
-        Instantiate(efectoExplosion, transform.position, Quaternion.identity);
+        Debug.Log("Explosion");
 
-        Collider2D[] objetos = Physics2D.OverlapCircleAll(transform.position, radio);
+        gameObject.transform.eulerAngles = new Vector3 (transform.rotation.x, transform.rotation.y, 0);
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
 
-        foreach (Collider2D colisionador in objetos)
+        col.isTrigger = true;
+
+        Collider2D[] tempRadius = Physics2D.OverlapCircleAll(transform.position, explosionRadius);
+
+        foreach (Collider2D collider in tempRadius)
         {
 
-            Rigidbody2D rb2D = colisionador.GetComponent<Rigidbody2D>();
-            if (rb2D != null)
+            Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
+            if (rb != null)
             {
-                Vector2 direccion = colisionador.transform.position - transform.position;
-                float distancia = 1 + direccion.magnitude;
-                float fuerzaFinal = fuerzaExplosion / distancia;
-                rb2D.AddForce(direccion * fuerzaFinal);
-
+                Vector2 direction = collider.transform.position - transform.position;
+                float distance = 2 + direction.magnitude;
+                float finalForce = 400 * explosionForce / distance;
+                rb.AddForce(direction * finalForce);
             }
         }
+    }
 
+    void Destroy()
+    {
         Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, radio);
+        Gizmos.DrawWireSphere(transform.position, explosionRadius);
     }
 }

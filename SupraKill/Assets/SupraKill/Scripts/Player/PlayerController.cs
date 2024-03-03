@@ -1,6 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using Unity.VisualScripting.InputSystem;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -13,14 +16,18 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D playerRb;
     private Animator anim;
     [SerializeField] float horizontalInput;
-    [SerializeField] private AudioSource jumpSoundEffect;
-    [SerializeField] private AudioSource deathSoundEffect;
+
+    [Header("Sounds")]
+    [SerializeField] AudioSource jumpSoundEffect;
+    [SerializeField] AudioSource deathSoundEffect;
+    [SerializeField] AudioSource throwSoundEffect;
 
     //BOMBA
-
-    public ProjectileBehaviour ProjectilePrefab;
-    public ProjectileBehaviour LaunchableProjectilePrefab;
-    public Transform LaunchOffset;
+    [SerializeField] GameObject thrownBomb;
+    [SerializeField] float bombOffsetDist;
+    [SerializeField] float throwBombOffsetHeight;
+    [SerializeField] float bombThrowingForce;
+    [SerializeField] float throwAngleLimit;
 
     [Header("Player Attributes")]
     [SerializeField] float velocityY;
@@ -63,7 +70,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource attackSoundEffect;
 
     [Header("Mouse Position")]
-    [SerializeField] Vector3 mousePos;
+    [SerializeField] Vector2 mousePos;
 
     private void Awake()
     {
@@ -90,8 +97,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        PlayerAttributes();
-        
+        PlayerDirection();
+
         //TakeDamage();
 
         if (velocityY < 0.5)
@@ -102,17 +109,6 @@ public class PlayerController : MonoBehaviour
         {
             playerRb.gravityScale = 2;
         }
-        //GROUNDCHECK
-        isGrounded = Physics2D.OverlapArea(
-                        new Vector2(groundCheck.transform.position.x - (groundedAreaLength / 2),
-                                    groundCheck.transform.position.y - groundedAreaHeight),
-                        new Vector2(groundCheck.transform.position.x + (groundedAreaLength / 2),
-                                    groundCheck.transform.position.y + 0.01f),
-                                    groundLayer);
-
-        Vector3 screenPosition = Input.mousePosition;
-        mousePos = Camera.main.ScreenToWorldPoint(screenPosition);
-        mousePos.z = 0;
 
         if (isAttacking)
         {
@@ -125,21 +121,13 @@ public class PlayerController : MonoBehaviour
 
         ConstantSaiAnim();
         TriggerAnimations();
-
-        if (Input.GetButtonDown("Fire2"))
-        {
-            Instantiate(LaunchableProjectilePrefab, LaunchOffset.position, transform.rotation);
-        }
-
-
-
+        
     }
-
 
     private void FixedUpdate()
     {
+        PlayerAttributes();
         Movement();
-        PlayerDirection();
 
     }
 
@@ -148,20 +136,38 @@ public class PlayerController : MonoBehaviour
         moveAxis = context.ReadValue<Vector2>();
     }
 
+    void PlayerAttributes()
+    {
+        //GROUNDCHECK
+        isGrounded = Physics2D.OverlapArea(
+                        new Vector2(groundCheck.transform.position.x - (groundedAreaLength / 2),
+                                    groundCheck.transform.position.y - groundedAreaHeight),
+                        new Vector2(groundCheck.transform.position.x + (groundedAreaLength / 2),
+                                    groundCheck.transform.position.y + 0.01f),
+                                    groundLayer);
+
+        //MOUSE: Screen to world pos
+        Vector2 screenPosition = Input.mousePosition;
+        mousePos = Camera.main.ScreenToWorldPoint(screenPosition);
+
+        velocityX = playerRb.velocity.x;
+        velocityY = playerRb.velocity.y;
+    }
+
     void Movement()
     {
-        //Frenada
+        //Stopping
         if (isGrounded)
         {
             if (isAttacking)
             {
-                playerRb.velocity = new Vector2(velocityX / 1.05f, velocityY);
+                playerRb.velocity = new Vector2(playerRb.velocity.x / 1.05f, playerRb.velocity.y);
             }
             else if (moveAxis.x == 0)
             {
-                if (Math.Abs(velocityX) > stoppingSpeed)
+                if (Math.Abs(playerRb.velocity.x) > stoppingSpeed)
                 {
-                    playerRb.velocity = new Vector2(velocityX / 1.3f, velocityY);
+                    playerRb.velocity = new Vector2(playerRb.velocity.x / 1.3f, playerRb.velocity.y);
                 }
                 else
                 {
@@ -170,11 +176,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (moveAxis.x > 0 && velocityX < playerBaseSpeed * 5)
+        //Accelerating
+        if (moveAxis.x > 0 && playerRb.velocity.x < playerBaseSpeed * 5)
         {
             playerRb.AddForce(moveAxis * (playerBaseSpeed / 1.5f) * playerSpeed, ForceMode2D.Impulse);
         }
-        else if (moveAxis.x < 0 && velocityX > -playerBaseSpeed * 5)
+        else if (moveAxis.x < 0 && playerRb.velocity.x > -playerBaseSpeed * 5)
         {
             playerRb.AddForce(moveAxis * (playerBaseSpeed / 1.5f) * playerSpeed, ForceMode2D.Impulse);
         }
@@ -182,38 +189,23 @@ public class PlayerController : MonoBehaviour
 
     public void Attack(InputAction.CallbackContext context)
     {
-        if (!isAttacking)
+        if (context.started && !isAttacking)
         {
             anim.SetTrigger("attack");
+            attackSoundEffect.Play();
             if (mousePos.x > groundCheck.transform.position.x)
             {
                 AttackingRight = true;
-                Atk();
             }
             else if (mousePos.x < groundCheck.transform.position.x)
             {
                 AttackingRight = false;
-                Atk();
-            }
-        }
-
-        void Atk() 
-        { 
-        attackSoundEffect.Play();
-        Collider2D[] objects = Physics2D.OverlapCircleAll(atkController.position, atkRadius);
-
-            foreach (Collider2D collider in objects)
-            {
-                if (collider.CompareTag("Enemy"))
-                {
-                collider.transform.GetComponent<MeleeEnemy>().TakeDamage(atkDmg);
-                }
             }
         }
     }
-    void Atk()
+
+    void AttackAction()
     {
-        attackSoundEffect.Play();
         Collider2D[] objects = Physics2D.OverlapCircleAll(atkController.position, atkRadius);
 
         foreach (Collider2D collider in objects)
@@ -225,24 +217,51 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-
-private void OnDrawGizmos()
+    public void BombThrow(InputAction.CallbackContext context)
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(atkController.position, atkRadius);
-
+        if (context.started && !isAttacking)
+        {
+            anim.SetTrigger("throwBomb");
+            throwSoundEffect.Play();
+            if (mousePos.x > groundCheck.transform.position.x)
+            {
+                AttackingRight = true;
+            }
+            else if (mousePos.x < groundCheck.transform.position.x)
+            {
+                AttackingRight = false;
+            }
+        }
     }
 
-    void PlayerAttributes()
+    public void BombThrowAction()
     {
-        velocityX = playerRb.velocity.x;
-        velocityY = playerRb.velocity.y;
+        //Throwing origin position
+        Vector2 throwPos = new Vector2(transform.position.x, transform.position.y + throwBombOffsetHeight);
+        //Difference between origin and target
+        Vector2 direction = mousePos - throwPos;
+        //Value in radians for the direction of the throw, clamped between min and max to avoid traspassing ground
+        float directionAngle = Mathf.Clamp(Mathf.Atan2(direction.x, direction.y), -Mathf.PI * throwAngleLimit, Mathf.PI * throwAngleLimit);
+        //Normalized direction in Vector2 values, Y multiplied by -1 because it was inverted otherwise, don't know why
+        Vector2 directionNormalized = new Vector2(Mathf.Cos(directionAngle - Mathf.PI / 2), - Mathf.Sin(directionAngle - Mathf.PI / 2));
+        //Position from which to spawn the projectile
+        Vector2 offset = directionNormalized * bombOffsetDist + throwPos;
+
+        //Instantiate and give force to the projectile prefab in the right position with the right direction
+        GameObject newBomb = Instantiate(thrownBomb, offset, transform.rotation);
+        newBomb.GetComponent<Rigidbody2D>().AddForce(directionNormalized * bombThrowingForce, ForceMode2D.Force);
     }
+
+    private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(atkController.position, atkRadius);
+        }
+
 
     public void Jump(InputAction.CallbackContext context)
     {
-        if (isGrounded)
+        if (context.started && isGrounded)
         {
             jumpSoundEffect.Play();
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);

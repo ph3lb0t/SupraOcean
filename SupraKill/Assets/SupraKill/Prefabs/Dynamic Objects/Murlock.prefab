@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2224330295332643822}
   - component: {fileID: 8878398716462947257}
+  - component: {fileID: 9198262852571014585}
   m_Layer: 0
   m_Name: Murlock
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 1415987182372760178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.39, y: -1.37, z: -0.018379621}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,6 +54,33 @@ MonoBehaviour:
   speed: 2
   idleDuration: 1
   anim: {fileID: 3739866046866872336}
+--- !u!50 &9198262852571014585
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1415987182372760178}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &2706653798230483422
 GameObject:
   m_ObjectHideFlags: 0
@@ -229,16 +257,11 @@ MonoBehaviour:
   atkDmg: 10
   playerInRange: 0
   isAttacking: 0
-  colliderDistance: 2
-  boxCollider: {fileID: 1721526195514864046}
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 64
   startingHealth: 0
+  currentHealth: 0
   iFramesDuration: 0
   numberOfFlashes: 0
   components: []
-  Sai: {fileID: 0}
 --- !u!95 &3739866046866872336
 Animator:
   serializedVersion: 5
