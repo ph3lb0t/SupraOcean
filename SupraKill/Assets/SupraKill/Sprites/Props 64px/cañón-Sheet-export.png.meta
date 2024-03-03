@@ -124,8 +124,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 596aea057c97f414c98dd115bd2301a3
-      internalID: 529304449
+      spriteID: fc6cbb64fb9f40b4fba3d059cd2b50c4
+      internalID: 1400495307
       vertices: []
       indices: 
       edges: []
@@ -145,8 +145,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99685488bcc60844dad5a66b27eaae59
-      internalID: -824382419
+      spriteID: ac792966c44d52a41a627c2b790719e2
+      internalID: -770368964
       vertices: []
       indices: 
       edges: []
@@ -166,8 +166,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c5ea403add857cb4b9c373f1158fa744
-      internalID: -1835162561
+      spriteID: 5daf5eb513895d145a4f1bca2fc59ec8
+      internalID: -727168013
       vertices: []
       indices: 
       edges: []
@@ -187,8 +187,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 387cf105fac860446b93c4988e5a4b7b
-      internalID: -418341074
+      spriteID: 20aded0d893d1d14b919a8ed250fffa4
+      internalID: 2014937055
       vertices: []
       indices: 
       edges: []
@@ -204,10 +204,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "ca\xF1\xF3n-Sheet-export_0": 529304449
-      "ca\xF1\xF3n-Sheet-export_1": -824382419
-      "ca\xF1\xF3n-Sheet-export_2": -1835162561
-      "ca\xF1\xF3n-Sheet-export_3": -418341074
+      "ca\xF1\xF3n-Sheet-export_0": 1400495307
+      "ca\xF1\xF3n-Sheet-export_1": -770368964
+      "ca\xF1\xF3n-Sheet-export_2": -727168013
+      "ca\xF1\xF3n-Sheet-export_3": 2014937055
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

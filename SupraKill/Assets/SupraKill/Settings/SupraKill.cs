@@ -42,7 +42,7 @@ public partial class @SupraKill: IInputActionCollection2, IDisposable
                     ""id"": ""df4358c8-3cfc-45d1-9e73-a3b0a51a818b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
