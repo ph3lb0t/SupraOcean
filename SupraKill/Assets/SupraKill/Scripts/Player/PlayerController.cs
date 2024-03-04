@@ -250,6 +250,7 @@ public class PlayerController : MonoBehaviour
         //Instantiate and give force to the projectile prefab in the right position with the right direction
         GameObject newBomb = Instantiate(thrownBomb, offset, transform.rotation);
         newBomb.GetComponent<Rigidbody2D>().AddForce(directionNormalized * bombThrowingForce, ForceMode2D.Force);
+        //newBomb.GetComponent<Rigidbody2D>().()
     }
 
     private void OnDrawGizmos()

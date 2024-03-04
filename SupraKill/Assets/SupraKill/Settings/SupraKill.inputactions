@@ -55,17 +55,6 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "up",
-                    "id": "7f18fb6f-4397-4dc7-953c-0130630ed57a",
-                    "path": "<Keyboard>/w",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
                     "name": "down",
                     "id": "5a367a01-2c5a-4a3f-b85a-0f9298227ca0",
                     "path": "<Keyboard>/s",

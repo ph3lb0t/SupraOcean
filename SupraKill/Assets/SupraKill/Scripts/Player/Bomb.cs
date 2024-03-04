@@ -27,8 +27,6 @@ public class Bomb : MonoBehaviour
 
     public void Explosion()
     {
-        Debug.Log("Explosion");
-
         gameObject.transform.eulerAngles = new Vector3 (transform.rotation.x, transform.rotation.y, 0);
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.constraints = RigidbodyConstraints2D.FreezePosition;

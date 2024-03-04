@@ -37,7 +37,7 @@ Transform:
   m_GameObject: {fileID: 2263697626143440069}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.59, y: -1.99, z: 0}
+  m_LocalPosition: {x: -0.786, y: -2.277, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -231,10 +231,6 @@ MonoBehaviour:
   throwBombOffsetHeight: 0.65
   bombThrowingForce: 451
   throwAngleLimit: 0.7
-  mouseDir: {x: 0, y: 0}
-  normalizedDirection: {x: 0, y: 0}
-  mouseAngle: 0
-  currentPos: {x: 0, y: 0}
   velocityY: 0
   velocityX: 0
   playerBaseSpeed: 1.21
@@ -263,7 +259,7 @@ MonoBehaviour:
   atkCD: 0.5
   timeUntilAttack: 0
   attackSoundEffect: {fileID: 5134072676855243780}
-  mousePos: {x: 0, y: 0, z: 0}
+  mousePos: {x: 0, y: 0}
 --- !u!114 &4325270017712162663
 MonoBehaviour:
   m_ObjectHideFlags: 0
