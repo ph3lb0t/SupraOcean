@@ -17,11 +17,6 @@ public class PlayerController : MonoBehaviour
     private Animator anim;
     [SerializeField] float horizontalInput;
 
-    [Header("Sounds")]
-    [SerializeField] AudioSource jumpSoundEffect;
-    [SerializeField] AudioSource deathSoundEffect;
-    [SerializeField] AudioSource throwSoundEffect;
-
     //BOMBA
     [SerializeField] GameObject thrownBomb;
     [SerializeField] float bombOffsetDist;
@@ -40,10 +35,6 @@ public class PlayerController : MonoBehaviour
 
     public float gravityX;
     public float gravityY;
-
-    public float maxHealth = 100;
-    public float currentHealth;
-
 
     [Header("Player Direction")]
     [SerializeField] bool isFacingRight = true;
@@ -67,7 +58,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float atkCD;
     [SerializeField] private float timeUntilAttack;
 
-    [SerializeField] private AudioSource attackSoundEffect;
+    [SerializeField] PlayerSFX sfx;
 
     [Header("Mouse Position")]
     [SerializeField] Vector2 mousePos;
@@ -81,25 +72,12 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        currentHealth = maxHealth;
         Physics2D.gravity = new Vector2(gravityX, gravityY);
-    }
-
-    //TRAMPA
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Trap"))
-        {
-            Death();
-        }
     }
 
     void Update()
     {
         PlayerDirection();
-
-        //TakeDamage();
 
         if (velocityY < 0.5)
         {
@@ -191,8 +169,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.started && !isAttacking)
         {
+            sfx.SFX[4].Play();
             anim.SetTrigger("attack");
-            attackSoundEffect.Play();
             if (mousePos.x > groundCheck.transform.position.x)
             {
                 AttackingRight = true;
@@ -206,8 +184,9 @@ public class PlayerController : MonoBehaviour
 
     void AttackAction()
     {
-        Collider2D[] objects = Physics2D.OverlapCircleAll(atkController.position, atkRadius);
+        
 
+        Collider2D[] objects = Physics2D.OverlapCircleAll(atkController.position, atkRadius);
         foreach (Collider2D collider in objects)
         {
             if (collider.CompareTag("Enemy"))
@@ -222,7 +201,7 @@ public class PlayerController : MonoBehaviour
         if (context.started && !isAttacking)
         {
             anim.SetTrigger("throwBomb");
-            throwSoundEffect.Play();
+            sfx.SFX[2].Play();
             if (mousePos.x > groundCheck.transform.position.x)
             {
                 AttackingRight = true;
@@ -259,16 +238,14 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawWireSphere(atkController.position, atkRadius);
         }
 
-
     public void Jump(InputAction.CallbackContext context)
     {
         if (context.started && isGrounded)
         {
-            jumpSoundEffect.Play();
+            sfx.SFX[5].Play();
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode2D.Impulse);
         }
     }
-
 
     void PlayerDirection()
     {
@@ -300,27 +277,6 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
         { anim.SetBool("jump", true); }
         else { anim.SetBool("jump", false); }
-    }
-
-    public void SaiTakeDamage(int amount)
-    {
-        Debug.Log("player hit");
-
-        anim.SetTrigger("hurt");
-        currentHealth -= amount;
-
-        if (currentHealth <= 0) 
-        {
-            Death();
-        }
-    }
-
-    private void Death()
-    {
-        deathSoundEffect.Play();
-        playerRb.bodyType = RigidbodyType2D.Static;
-        anim.SetTrigger("death");
-        //Then show death screen
     }
 
     //RESTART

@@ -30,7 +30,6 @@ public class MeleeEnemy : MonoBehaviour
     //References
     private Animator anim;
     private BoxCollider2D boxCollider;
-    private MeleeEnemy playerHealth;
     private EnemyPatrol enemyPatrol;
 
     //External References
@@ -38,7 +37,7 @@ public class MeleeEnemy : MonoBehaviour
 
     private void Awake()
     {
-        sai = GameObject.Find("Sai");
+        sai = GameObject.FindGameObjectWithTag("Player");
         currentHealth = startingHealth;
         anim = GetComponent<Animator>();
         enemyPatrol = GetComponentInParent<EnemyPatrol>();
@@ -63,14 +62,14 @@ public class MeleeEnemy : MonoBehaviour
         Debug.Log("attack done");
         if (playerInRange)
         {
-            sai.GetComponent<PlayerController>().SaiTakeDamage(atkDmg);
+            sai.GetComponent<Health>().HealthChange(-atkDmg);
         }
     }
 
-    public void TakeDamage(float _damage)
+    public void TakeDamage(float dmg)
     {
         if (!invulnerable) return;
-        currentHealth = Mathf.Clamp(currentHealth - _damage, 0, startingHealth);
+        currentHealth = Mathf.Clamp(currentHealth - dmg, 0, startingHealth);
 
         if (currentHealth > 0)
         {

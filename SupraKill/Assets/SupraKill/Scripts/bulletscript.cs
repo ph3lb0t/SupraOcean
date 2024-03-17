@@ -24,12 +24,11 @@ public class bulletscript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        int dmg = atKDmg;
         if (collision.gameObject.CompareTag("Player") && !playerDamaged)
         {
             rb.gravityScale = 1;
             playerDamaged = true;
-            collision.gameObject.GetComponent<PlayerController>().SaiTakeDamage(dmg);
+            collision.gameObject.GetComponent<Health>().HealthChange(-atKDmg);
         }
         if (collision.gameObject.CompareTag("Ground"))
         {

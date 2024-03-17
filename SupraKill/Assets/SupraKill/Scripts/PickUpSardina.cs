@@ -15,11 +15,11 @@ public class PickUpSardina : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (playerHealth.currentHealth < playerHealth.maxHealth)
+        //if (playerHealth.currentHealth < playerHealth.maxHealth)
         {
             healSoundEffect.Play();
             Destroy(gameObject);
-            playerHealth.currentHealth = playerHealth.currentHealth + healthBonus;
+        //    playerHealth.currentHealth = playerHealth.currentHealth + healthBonus;
         }
     }
 }
